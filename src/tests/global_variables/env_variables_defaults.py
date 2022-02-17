@@ -30,6 +30,37 @@ class _EnvVariables(DataPool, ABC):
     vip_dhcp_allocation: EnvVar = EnvVar(
         ["VIP_DHCP_ALLOCATION"], loader=lambda x: bool(strtobool(x)), default=env_defaults.DEFAULT_VIP_DHCP_ALLOCATION
     )
+    single_node_ip: str = get_env("SINGLE_NODE_IP", env_defaults.DEFAULT_SINGLE_NODE_IP)
+    worker_cpu_mode: str = get_env("WORKER_CPU_MODE", env_defaults.DEFAULT_TF_CPU_MODE)
+    master_cpu_mode: str = get_env("MASTER_CPU_MODE", env_defaults.DEFAULT_TF_CPU_MODE)
+    iso_download_path: str = get_env("ISO_DOWNLOAD_PATH", get_env("ISO"))  # todo replace ISO env var->ISO_DOWNLOAD_PATH
+    hyperthreading: str = get_env("HYPERTHREADING")
+    network_type: str = get_env("NETWORK_TYPE", env_defaults.DEFAULT_NETWORK_TYPE)
+    disk_encryption_mode: str = get_env("DISK_ENCRYPTION_MODE", env_defaults.DEFAULT_DISK_ENCRYPTION_MODE)
+    disk_encryption_roles: str = get_env("DISK_ENCRYPTION_ROLES", env_defaults.DEFAULT_DISK_ENCRYPTION_ROLES)
+    is_kube_api: bool = bool(strtobool(get_env("KUBE_API", str(env_defaults.DEFAULT_IS_KUBE_API))))
+    hold_installation = bool(strtobool(get_env("HOLD_INSTALLATION", str(env_defaults.DEFAULT_HOLD_INSTALLATION))))
+
+    vsphere_cluster: str = get_env("VSPHERE_CLUSTER")
+    vsphere_username: str = get_env("VSPHERE_USERNAME")
+    vsphere_password: str = get_env("VSPHERE_PASSWORD")
+    vsphere_network: str = get_env("VSPHERE_NETWORK")
+    vsphere_vcenter: str = get_env("VSPHERE_VCENTER")
+    vsphere_datacenter: str = get_env("VSPHERE_DATACENTER")
+    vsphere_datastore: str = get_env("VSPHERE_DATASTORE")
+
+    ovirt_cluster_id: str = get_env("OVIRT_CLUSTER")
+    ovirt_fqdn: str = get_env("OVIRT_FQDN")
+    ovirt_username: str = get_env("OVIRT_USERNAME")
+    ovirt_password: str = get_env("OVIRT_PASSWORD")
+    ovirt_ca_bundle: str = get_env("OVIRT_CA_BUNDLE")
+    ovirt_insecure: bool = bool(strtobool(get_env("OVIRT_INSECURE")))
+    ovirt_storage_domain_id: str = get_env("OVIRT_STORAGE_DOMAIN_ID")
+    ovirt_storage_domain_name: str = get_env("OVIRT_STORAGE_DOMAIN_NAME")
+    ovirt_network: str = get_env("OVIRT_NETWORK")
+    ovirt_vnic_profile: str = get_env("OVIRT_VNIC")
+
+    __instance: ClassVar = None
 
     worker_memory: EnvVar = EnvVar(["WORKER_MEMORY"], loader=int, default=resources.DEFAULT_WORKER_MEMORY)
     master_memory: EnvVar = EnvVar(["MASTER_MEMORY"], loader=int, default=resources.DEFAULT_MASTER_MEMORY)
